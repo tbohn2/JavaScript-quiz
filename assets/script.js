@@ -5,46 +5,49 @@ var heading = document.querySelector("#heading")
 var btn = document.querySelector("#startbtn")
 var instructions = document.querySelector("#instructions")
 var list = document.querySelector("#list")
-
+var index = 0
+var currentQuestion
 
 var questions = ["Which of the following is not a data type in JS?", "Which of the following is NOT a loop in JavaScript?",
     "What is the output of the following code? var a = 5; console.log(++a)", "Which of the following is the correct way to declare a variable in JavaScript?"]
-var ansarray = [["String", "Boolean", "Integer", "Undefined"]]
+var ansarray = [["String", "Boolean", "Integer", "Undefined"], ["for loop", "while loop", "do-while loop", "switch loop"],
+["5", "6", "7", "4"], ["var variableName = value", "variableName - value", "value = variableName", "declare variableName = value"]]
 
-function nextQuestion(event) {
-    event.preventDefault();
+function firstQuestion(event) {
+    event.preventDefault()
     btn.remove()
     instructions.remove()
-    for (let i = 0; i < questions.length; i++) {
-        let question = questions[i];
-        heading.innerText = question;
-        let answers = ansarray[i].splice(" ")
-        console.log(answers);
-        for (let i = 0; i < answers.length; i++) {
-            let li = document.createElement("li")
-            let lib = document.createElement("button")
-            lib.setAttribute("class", "btn")
-            lib.innerText = answers[i]
-            li.appendChild(lib)
-            list.appendChild(li)
-        }
-        // let li1 = document.createElement("li")
-        // let li2 = document.createElement("li")
-        // let li3 = document.createElement("li")
-        // let li4 = document.createElement("li")
-        // let li1b = document.createElement("button")
-        // li1b.innerText = answers[0]
-        // li2.innerText = answers[1]
-        // li3.innerText = answers[2]
-        // li4.innerText = answers[3]
-        // li1.appendChild(li1b)
-        // list.appendChild(li1)
-        // list.appendChild(li2)
-        // list.appendChild(li3)
-        // list.appendChild(li4)
-        break
-        // resume
+    heading.innerText = questions[index]
+    displayanswers()
+}
+
+function nextQuestion() {
+    index = index + 1
+    heading.innerText = questions[index]
+    displayanswers()
+}
+
+function displayanswers() {
+    let i = index
+    let answers = ansarray[index].splice(" ")
+    for (let i = 0; i < answers.length; i++) {
+        let li = document.createElement("li")
+        let lib = document.createElement("button")
+        lib.setAttribute("class", "btn")
+        lib.innerText = answers[i]
+        li.appendChild(lib)
+        list.appendChild(li)
     }
 }
 
-btn.addEventListener("click", nextQuestion);
+
+function correct() {
+    resume
+}
+function incorrect() {
+    let tryagain = document.createElement("p")
+    tryagain.innerText("That is incorrect, try again")
+    document.body.appendChild(tryagain)
+}
+
+btn.addEventListener("click", firstQuestion);
