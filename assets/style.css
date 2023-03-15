@@ -21,7 +21,7 @@ body {
     margin: 5%;
 }
 
-#btn {
+.btn {
     color: aliceblue;
     background-color: rgb(180, 90, 180);
     border: 1px groove white;
