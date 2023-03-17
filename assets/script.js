@@ -7,7 +7,7 @@ var btn = document.querySelector("#startbtn")
 var instructions = document.querySelector("#instructions")
 var list = document.querySelector("#list")
 var index = 0
-var timeLeft = 80
+var timeLeft = 3
 
 var questions = ["Which of the following is not a data type in JS?", "Which of the following is NOT a loop in JavaScript?",
     "What is the output of the following code? var a = 5; console.log(++a)", "Which of the following is the correct way to declare a variable in JavaScript?"]
@@ -15,11 +15,33 @@ var ansarray = [["String", "Boolean", "Integer", "Undefined"], ["for loop", "whi
 ["5", "6", "7", "4"], ["var variableName = value", "variableName = value", "value = variableName", "declare variableName = value"]]
 var correctans = ["Integer", "switch loop", "6", "var variableName = value"]
 
+
 function keepTime() {
-    setInterval(() => {
-        timeLeft -= 1
-        timer.innerText = "Timer: " + timeLeft
-    }, 1000);
+    let int = setInterval(() => {
+        if (timeLeft > 0) {
+            timeLeft -= 1
+            timer.innerText = "Timer: " + timeLeft
+        }
+        if (timeLeft === 0) {
+            clearInterval(int)
+            heading.innerText = "You Ran Out of Time"
+            while (list.hasChildNodes()) {
+                list.removeChild(list.firstChild);
+            }
+            let restartbtn = document.createElement("button")
+            restartbtn.setAttribute("class", "btn")
+            restartbtn.innerText = "Press to Try Again"
+            box.appendChild(restartbtn)
+            restartbtn.addEventListener("click", restart);
+
+
+        }
+    }, 1000)
+}
+
+function restart() {
+    console.log("yo mama");
+    location.reload()
 }
 
 function firstQuestion(event) {
@@ -36,7 +58,7 @@ function nextQuestion(event) {
     event.preventDefault()
     let selection = event.target.innerText
     if (selection == correctans[index]) {
-        index = index + 1
+        index += 1
         heading.innerText = questions[index]
         while (list.hasChildNodes()) {
             list.removeChild(list.firstChild);
@@ -50,7 +72,7 @@ function nextQuestion(event) {
         document.body.appendChild(tryagain)
         setInterval(function deleteTryAgain() {
             tryagain.remove()
-        }, 1500)
+        }, 700)
     }
 }
 
@@ -69,7 +91,7 @@ function displayanswers() {
     }
 }
 
-console.log(setTimeout);
+
 function youLose() {
 
 }
