@@ -7,6 +7,7 @@ var btn = document.querySelector("#startbtn")
 var instructions = document.querySelector("#instructions")
 var list = document.querySelector("#list")
 var reaction = document.querySelector("#reaction")
+var scorebuttons = document.querySelector("#scorebuttons")
 var index = 0
 var timeLeft = 80
 
@@ -23,26 +24,20 @@ function keepTime() {
             timeLeft -= 1
             timer.innerText = "Timer: " + timeLeft
         }
-        else if (timeLeft <= 0) {
-            if (heading.innerHTML = "You Did It!") {
-
+        else if (timeLeft <= 0 && heading.innerHTML !== "You did it!" && heading.innerHTML !== "Highscores") {
+            clearInterval(int)
+            reaction.innerText = ""
+            timer.innerText = "Timer: 0"
+            heading.innerText = "You Ran Out of Time"
+            while (list.hasChildNodes()) {
+                list.removeChild(list.firstChild);
             }
-            else {
-                clearInterval(int)
-                reaction.innerText = ""
-                timer.innerText = "Timer: 0"
-                heading.innerText = "You Ran Out of Time"
-                while (list.hasChildNodes()) {
-                    list.removeChild(list.firstChild);
-                }
-                let restartbtn = document.createElement("button")
-                restartbtn.setAttribute("class", "btn")
-                restartbtn.innerText = "Press to Try Again"
-                box.appendChild(restartbtn)
-                restartbtn.addEventListener("click", restart);
-            }
+            let restartbtn = document.createElement("button")
+            restartbtn.setAttribute("class", "btn")
+            restartbtn.innerText = "Press to Try Again"
+            box.appendChild(restartbtn)
+            restartbtn.addEventListener("click", restart);
         }
-
     }, 1000)
 }
 
@@ -128,7 +123,7 @@ function inputscore() {
     submitbtn.addEventListener("click", saveHighscore)
     function saveHighscore() {
         let highscore = {
-            initials: input.value.trim(),
+            initials: input.value.trim().toUpperCase(),
             score: timeLeft
         }
         highscores.push(highscore)
@@ -142,18 +137,35 @@ function inputscore() {
 
 function showHighscores(event) {
     heading.innerText = "Highscores"
+    scorelink.remove()
+    timer.remove()
     list.remove()
     instructions.remove()
     btn.remove()
     reaction.remove()
     let scorelist = document.createElement("ol")
     box.appendChild(scorelist)
+    highscores.sort(function (a, b) { return b.score - a.score })
     for (let i = 0; i < highscores.length; i++) {
         let rank = document.createElement("li")
         rank.innerText = highscores[i].initials + " - " + highscores[i].score
         scorelist.appendChild(rank)
-        console.log(rank);
     }
+    let restartbtn = document.createElement("button")
+    let clearbtn = document.createElement("button")
+    restartbtn.setAttribute("class", "btn")
+    clearbtn.setAttribute("class", "btn")
+    restartbtn.innerText = "Go Back"
+    clearbtn.innerText = "Clear Highscores"
+    scorebuttons.appendChild(restartbtn)
+    scorebuttons.appendChild(clearbtn)
+    restartbtn.addEventListener("click", restart);
+    clearbtn.addEventListener("click", clearScores);
+}
+
+function clearScores(event) {
+    localStorage.removeItem("score")
+    showHighscores()
 }
 
 btn.addEventListener("click", firstQuestion);
