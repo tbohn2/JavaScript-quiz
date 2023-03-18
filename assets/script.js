@@ -107,6 +107,9 @@ function displayanswers() {
     }
 }
 
+
+let highscores = JSON.parse(localStorage.getItem("score"))
+
 function inputscore() {
     let yourscore = document.createElement("p")
     box.appendChild(yourscore)
@@ -122,12 +125,38 @@ function inputscore() {
     submitbtn.setAttribute("class", "btn")
     submitbtn.innerText = "Submit"
     submitbox.appendChild(submitbtn)
-
-
+    submitbtn.addEventListener("click", saveHighscore)
+    function saveHighscore() {
+        let highscore = {
+            initials: input.value.trim(),
+            score: timeLeft
+        }
+        highscores.push(highscore)
+        console.log(highscores);
+        localStorage.setItem("score", JSON.stringify(highscores))
+        submitbox.remove()
+        yourscore.remove()
+        showHighscores()
+    }
 }
 
+function showHighscores(event) {
+    heading.innerText = "Highscores"
+    list.remove()
+    instructions.remove()
+    btn.remove()
+    reaction.remove()
+    let scorelist = document.createElement("ol")
+    box.appendChild(scorelist)
+    for (let i = 0; i < highscores.length; i++) {
+        let rank = document.createElement("li")
+        rank.innerText = highscores[i].initials + " - " + highscores[i].score
+        scorelist.appendChild(rank)
+        console.log(rank);
+    }
+}
 
 btn.addEventListener("click", firstQuestion);
-
+scorelink.addEventListener("click", showHighscores)
 
 
