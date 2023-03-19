@@ -27,3 +27,11 @@ body {
     border: 1px groove white;
     margin: 3px;
 }
+
+.highscore {
+    width: 1000px;
+}
+
+.highscoreli:nth-child(odd) {
+    background-color: rgb(208, 170, 218);
+}

@@ -102,8 +102,10 @@ function displayanswers() {
     }
 }
 
-
 let highscores = JSON.parse(localStorage.getItem("score"))
+if (highscores == null) {
+    highscores = []
+}
 
 function inputscore() {
     let yourscore = document.createElement("p")
@@ -135,7 +137,7 @@ function inputscore() {
     }
 }
 
-function showHighscores(event) {
+function showHighscores() {
     heading.innerText = "Highscores"
     scorelink.remove()
     timer.remove()
@@ -148,6 +150,7 @@ function showHighscores(event) {
     highscores.sort(function (a, b) { return b.score - a.score })
     for (let i = 0; i < highscores.length; i++) {
         let rank = document.createElement("li")
+        rank.setAttribute("class", "highscoreli")
         rank.innerText = highscores[i].initials + " - " + highscores[i].score
         scorelist.appendChild(rank)
     }
@@ -161,12 +164,13 @@ function showHighscores(event) {
     scorebuttons.appendChild(clearbtn)
     restartbtn.addEventListener("click", restart);
     clearbtn.addEventListener("click", clearScores);
+    function clearScores() {
+        localStorage.removeItem("score")
+        scorelist.remove()
+    }
 }
 
-function clearScores(event) {
-    localStorage.removeItem("score")
-    showHighscores()
-}
+
 
 btn.addEventListener("click", firstQuestion);
 scorelink.addEventListener("click", showHighscores)
