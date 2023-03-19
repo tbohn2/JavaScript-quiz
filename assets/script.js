@@ -10,13 +10,15 @@ var reaction = document.querySelector("#reaction")
 var scorebuttons = document.querySelector("#scorebuttons")
 var index = 0
 var timeLeft = 80
-
+var highscores = JSON.parse(localStorage.getItem("score"))
+if (highscores == null) {
+    highscores = []
+}
 var questions = ["Which of the following is not a data type in JS?", "Which of the following is NOT a loop in JavaScript?",
     "What is the output of the following code? var a = 5; console.log(++a)", "Which of the following is the correct way to declare a variable in JavaScript?"]
 var ansarray = [["String", "Boolean", "Integer", "Undefined"], ["for loop", "while loop", "do-while loop", "switch loop"],
 ["5", "6", "7", "4"], ["var variableName = value", "variableName = value", "value = variableName", "declare variableName = value"]]
 var correctans = ["Integer", "switch loop", "6", "var variableName = value"]
-
 
 function keepTime() {
     let int = setInterval(() => {
@@ -62,7 +64,7 @@ function nextQuestion(event) {
         reaction.innerText = "Correct!"
         setTimeout(() => {
             reaction.innerText = ""
-        }, 1000);
+        }, 500);
         index += 1
         heading.innerText = questions[index]
         while (list.hasChildNodes()) {
@@ -74,7 +76,6 @@ function nextQuestion(event) {
             list.remove()
             reaction.remove()
             inputscore()
-
         }
         else {
             displayanswers()
@@ -88,7 +89,6 @@ function nextQuestion(event) {
 }
 
 function displayanswers() {
-    let i = index
     let answers = ansarray[index].splice(" ")
     for (let i = 0; i < answers.length; i++) {
         let li = document.createElement("li")
@@ -102,11 +102,6 @@ function displayanswers() {
     }
 }
 
-let highscores = JSON.parse(localStorage.getItem("score"))
-if (highscores == null) {
-    highscores = []
-}
-
 function inputscore() {
     let yourscore = document.createElement("p")
     box.appendChild(yourscore)
@@ -117,6 +112,7 @@ function inputscore() {
     label.innerText = "Initials here: "
     submitbox.appendChild(label)
     let input = document.createElement("input")
+    input.setAttribute("maxlength", "2")
     submitbox.appendChild(input)
     let submitbtn = document.createElement("button")
     submitbtn.setAttribute("class", "btn")
@@ -170,9 +166,5 @@ function showHighscores() {
     }
 }
 
-
-
 btn.addEventListener("click", firstQuestion);
 scorelink.addEventListener("click", showHighscores)
-
-
