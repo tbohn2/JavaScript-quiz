@@ -6,7 +6,6 @@ body {
 }
 
 #top {
-    /* border: 1px solid black; */
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -16,7 +15,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* border: 1px solid black; */
     width: 40%;
     margin: 5%;
 }
@@ -28,10 +26,7 @@ body {
     margin: 3px;
 }
 
-.highscore {
-    width: 1000px;
-}
-
+/* Makes every other list item in score list have a background */
 .highscoreli:nth-child(odd) {
     background-color: rgb(208, 170, 218);
 }

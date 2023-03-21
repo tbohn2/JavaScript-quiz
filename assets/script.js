@@ -132,6 +132,7 @@ function displayanswers() {
 
 // Function to save score and initials into local storage
 function inputscore() {
+    scorelink.remove()
     // Creates p element to display user's final score
     let yourscore = document.createElement("p")
     box.appendChild(yourscore)
