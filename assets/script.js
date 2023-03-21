@@ -18,7 +18,7 @@ if (highscores == null) {
 // Array of JS questions
 var questions = ["Which of the following is not a data type in JS?", "Which of the following is NOT a loop in JavaScript?",
     "What is the output of the following code? var a = 5; console.log(++a)", "Which of the following is the correct way to declare a variable in JavaScript?"]
-// Array container array of answers to each question
+// Array containing array of answers to each question
 var ansarray = [["String", "Boolean", "Integer", "Undefined"], ["for loop", "while loop", "do-while loop", "switch loop"],
 ["5", "6", "7", "4"], ["var variableName = value", "variableName = value", "value = variableName", "declare variableName = value"]]
 // Correct answer for each question
@@ -156,11 +156,12 @@ function inputscore() {
     // Button causes saveHighscore function to be called when clicked
     submitbtn.addEventListener("click", saveHighscore)
     // Function to save score to local storage
+    let newScore = timeLeft
     function saveHighscore() {
         // Creates an object containing the user's initials and score
         let highscore = {
             initials: input.value.trim().toUpperCase(),
-            score: timeLeft
+            score: newScore
         }
         // Adds new score to the existing array of highscores
         highscores.push(highscore)
